@@ -12,10 +12,10 @@ process FASTQC {
 	    file fastq 
 
 	output:
-	    path "*_fastqc.{zip,html}", emit: fastqc_full_reports
+	    path "*_fastqc.{zip,html}", emit: fastqc_results
 
     script:
         """
-        fastqc -q $fastq 
+        fastqc -q $fastq --adapters ${params.adapters_tsv} --threads ${task.cpus}
         """
 }

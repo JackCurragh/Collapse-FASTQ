@@ -4,7 +4,7 @@
 nextflow.enable.dsl=2
 
 /// Import modules and subworkflows
-include { quality_control } from './subworkflows/local/quality_control.nf'
+include { collapse } from './subworkflows/local/collapse.nf'
 
 // Log the parameters
 log.info """\
@@ -14,20 +14,20 @@ log.info """\
 =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 ||  Parameters                                                             
 =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
-||  input_dir   : ${params.input_dir}                                     
-||  outDir      : ${params.output_dir}                                        
-||  workDir     : ${workflow.workDir}                                     
+||  accession_file  : ${params.accession_file}                                     
+||  outDir          : ${params.output_dir}                                        
+||  workDir         : ${workflow.workDir}                                     
 =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 
 """
 // Help Message to prompt users to specify required parameters
 def help() {
     log.info"""
-  Usage:  nextflow run main.nf --input <path_to_fastq_dir> 
+  Usage:  nextflow run main.nf --accession_file <path to sample_accession.txt file> --outDir <path to output directory>
 
   Required Arguments:
 
-  --input    Path to directory containing fastq files.
+  --accession_file    Path to sample_accession.txt file.
 
   Optional Arguments:
 
@@ -38,14 +38,13 @@ def help() {
 
 /// Define the main workflow
 workflow {
-    /// Define the input channels
-    fastq_ch = Channel.fromPath("${params.input_dir}/*.fastq.gz")
-                        .ifEmpty { exit 1, "No fastq files found in ${params.input_dir}" }
+    /// Define the input channel
 
-    /// Run the subworkflow
-    // show fastq_ch
-    println '$params.input_dir/*.fastq.gz'
-    quality_control(fastq_ch)
+    accession_ch = Channel
+                    .fromPath( params.accession_file )
+                    .splitText() { it.strip() }
+                    
+    collapse(accession_ch)
 }
 
 workflow.onComplete {
