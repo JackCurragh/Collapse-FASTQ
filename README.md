@@ -2,7 +2,32 @@
 # Collapse FASTQ Files
 ## Introduction 
 
-[Describe here what this pipeline does]
+### Inputs
+This pipeline is general purpose for preparing FASTQ read files but was specifically developed to prepare data for [RiboSeq.Org](https://riboseq.org/). 
+Inputs for this pipeline may vary. Options include:
+- Study accession
+- Sample accession list 
+- Path to FASTQ directory
+
+### Outputs
+#### Collapsed Read File
+The primary output is a gzipped collapsed read file of the following format:
+```
+>read<read_number>_x<read_count>
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+```
+where:
+- `<read_number>` signifies that this is the nth read processed. 
+- `<read_count>` signifies how many times reads with this exact sequence was seen
+
+#### FastQC Report 
+The `html` report for each sample is outputted 
+
+#### FastP
+The `html` report from FastP 
+
+#### MultiQC Report
+Combined report for each pipeline run. Merged FastP and FastQC 
 
 ## Requirements 
 This pipeline can be run using each of the following container methods
