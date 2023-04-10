@@ -14,6 +14,6 @@ process FASTP {
 
     script:
         """
-        fastp -i $fastq -o ${fastq}.fastp.fastq.gz -h ${fastq}.fastp.html --adapter_fasta ${params.adapters_fa}
+        fastp -i $fastq -o ${fastq}.fastp.fastq.gz -h ${fastq}.fastp.html --adapter_fasta ${params.adapters_fa} --thread ${task.cpus} --json ${fastq}.fastp.json
         """
 }
