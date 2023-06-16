@@ -16,7 +16,8 @@ log.info """\
 =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 ||  accession_file  : ${params.accession_file}                                     
 ||  outDir          : ${params.output_dir}                                        
-||  workDir         : ${workflow.workDir}                                     
+||  workDir         : ${workflow.workDir}
+||  profile         : ${workflow.profile}                                     
 =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 
 """
@@ -43,7 +44,7 @@ workflow {
     accession_ch = Channel
                     .fromPath( params.accession_file )
                     .splitText() { it.strip() }
-                    
+
     collapse(accession_ch)
 }
 

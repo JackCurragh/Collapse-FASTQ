@@ -1,1 +1,0 @@
-This directory is the home of docker containers for this pipeline
