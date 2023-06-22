@@ -4,30 +4,32 @@
 nextflow.enable.dsl=2
 
 /// Import modules and subworkflows
-include { collapse } from './subworkflows/local/collapse.nf'
+include { fetch_data } from './subworkflows/local/fetch_data.nf'
+include { preprocessing } from './subworkflows/local/preprocessing.nf'
 
 // Log the parameters
 log.info """\
 
 =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
-||                        INSERT PIPELINE NAME                             
+||                 RiboSeqOrg Data Processing Pipeline                            
 =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 ||  Parameters                                                             
 =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
-||  accession_file  : ${params.accession_file}                                     
+||  Sample Sheet    : ${params.sample_sheet}                                     
 ||  outDir          : ${params.output_dir}                                        
-||  workDir         : ${workflow.workDir}                                     
+||  workDir         : ${workflow.workDir}   
+||  study_dir       : ${params.study_dir}                                     
 =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 
 """
 // Help Message to prompt users to specify required parameters
 def help() {
     log.info"""
-  Usage:  nextflow run main.nf --accession_file <path to sample_accession.txt file> --outDir <path to output directory>
+  Usage:  nextflow run main.nf --input <path_to_fastq_dir> 
 
   Required Arguments:
 
-  --accession_file    Path to sample_accession.txt file.
+  --input    Path to directory containing fastq files.
 
   Optional Arguments:
 
@@ -36,15 +38,15 @@ def help() {
 """.stripIndent()
 }
 
-/// Define the main workflow
 workflow {
-    /// Define the input channel
+    samples_ch  =   Channel
+                        .fromPath(params.sample_sheet)
+                        .splitCsv(header: true, sep: '\t')
+                        .map { row -> tuple("${row.BioProject}", "${row.Run}")}
 
-    accession_ch = Channel
-                    .fromPath( params.accession_file )
-                    .splitText() { it.strip() }
-                    
-    collapse(accession_ch)
+    fetch_data_ch           =   fetch_data(samples_ch)
+
+    collapsed_fastq_ch      =   preprocessing(fetch_data_ch.fastq_ch, samples_ch)
 }
 
 workflow.onComplete {
