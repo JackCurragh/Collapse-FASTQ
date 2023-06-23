@@ -22,7 +22,6 @@ def get_adapter_dict(adapter_path: str) -> dict:
         dictionary of adapter sequences and names
     '''
     df = pd.read_csv(adapter_path, sep='\t', header=None, comment='#')
-    print(df)
     return df.set_index(0)[1].to_dict()
 
 

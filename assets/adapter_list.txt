@@ -37,6 +37,32 @@ user_adapter3							CTGATGGCGCGAGGGAGGCGTGTAGATCTCGGTGGTCGCCGTATCATT
 user_adapter4							GATCGGAAGAGCACACGTCTGAACTCCAGTCACA
 user_adapter5							AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT
 
+Hankon2                                 CACTCGGGCACCAAGGA
+Hakon3                                  GTGTCAGTCACTTCCAGCGG
+Hakon4                                  TGTAGGCACCATC
+Hakon5                                  AAAAAAAAAA
+Hakon6                                  TCGTATGCCGTCTTCTGCTT
+
+Kiniry1                                 CTGTAGGCACCATCAAT
+Kiniry2                                 AGATCGGAAGAGC
+Kiniry3                                 CGCCTTGGCCGTACAGCAG
+Kiniry4                                 AAAAAAAAAAAAA
+Kiniry5                                 TGGAATTCTCGGGTGCCAAGG
+Kiniry6                                 CCTTGGCACCCGAGAATT
+Kiniry7                                 GATCGGAAGAGCGTCGT
+Kiniry8                                 CTGATGGCGCGAGGGAG
+Kiniry9                                 GATCGGAAGAGCACACG
+Kiniry10                                AATGATACGGCGACCAC
+Kiniry11                                GATCGGAAGAGCTCGTA
+Kiniry12                                CAAGCAGAAGACGGCAT
+Kiniry13                                ACACTCTTTCCCTACA
+Kiniry14                                GATCGGAAGAGCGGTT
+Kiniry15                                ACAGGTTCAGAGTTCTA
+Kiniry16                                CAAGCAGAAGACGGCAT
+Kiniry17                                ACAGGTTCAGAGTTCTA
+Kiniry18                                CAAGCAGAAGACGGCAT
+Kiniry19                                TGATCGGAAGAGCACAC
+Kiniry10                                GATCGGAAGAGCACACGT
 
 
 Illumina Single End Adapter 1					GATCGGAAGAGCTCGTATGCCGTCTTCTGCTTG

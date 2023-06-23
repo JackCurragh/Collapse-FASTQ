@@ -5,13 +5,15 @@ process FASTQC {
     tag 'medium'
 
 	publishDir "${params.study_dir}/fastqc", mode: 'copy'
+
+    errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
 	
 	input:
 	    file fastq 
 
 	output:
 	    path "*_fastqc.html", emit: fastqc_html
-        path "*/fastqc_data.txt", emit: fastqc_data
+        path "${fastq}c/fastqc_data.txt", emit: fastqc_data
 
     script:
         """

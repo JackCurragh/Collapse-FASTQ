@@ -16,7 +16,6 @@ log.info """\
 ||  Parameters                                                             
 =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 ||  Sample Sheet    : ${params.sample_sheet}                                     
-||  outDir          : ${params.output_dir}                                        
 ||  workDir         : ${workflow.workDir}   
 ||  study_dir       : ${params.study_dir}                                     
 =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
