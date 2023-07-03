@@ -13,10 +13,10 @@ process FASTQC {
 
 	output:
 	    path "*_fastqc.html", emit: fastqc_html
-        path "${fastq}c/fastqc_data.txt", emit: fastqc_data
+        path "${fastq.baseName}_fastqc/fastqc_data.txt", emit: fastqc_data
 
     script:
         """
-        fastqc --extract -q $fastq --adapters $projectDir/scripts/adapter_list.tsv
+        fastqc --extract -q $fastq --adapters $projectDir/scripts/adapter_list.tsv --dir /data2/Jack/temp
         """
 }
