@@ -3,15 +3,20 @@
 include { FASTQC } from '../../modules/local/fastqc.nf'
 include { FETCH_RUN } from '../../modules/local/fetch.nf'
 include { FASTERQ_DUMP } from '../../modules/local/fasterq_dump.nf'
+include { FASTQ_DL } from '../../modules/local/fastq-dl.nf'
 
 workflow fetch_data {
 
     take: samples_ch
 
     main:
-        // fastq_ch   =   FASTQ_DL( samples_ch )
         sra_ch          =   FETCH_RUN       ( samples_ch )
-        fastq_ch        =   FASTERQ_DUMP    ( sra_ch )
+        if ( sra_ch.failure ) {
+            backup_fastq_ch    =   FASTQ_DL (sra_ch.failure, samples_ch)
+        }
+        fastq_ch    =   FASTERQ_DUMP    ( sra_ch.sra )
+        fastq_ch.concat(backup_fastq_ch.fastq)
+        fastq_ch.view()
 
     emit:
         fastq_ch

@@ -5,13 +5,14 @@
 process FASTQ_DL {    
 	
 	input:
-	    val accession
+        val failure
+        tuple val(study_accession), val(run)
 
 	output:
-	    path "*.fastq.gz" // ; emit fastq
+	    path "*.fastq.gz", emit: fastq
 
     script:
         """
-        fastq-dl -a $accession --cpus ${task.cpus}
+        fastq-dl -a $run --cpus ${task.cpus}
         """
 }
