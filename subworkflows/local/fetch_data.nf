@@ -11,12 +11,11 @@ workflow fetch_data {
 
     main:
         sra_ch          =   FETCH_RUN       ( samples_ch )
+
         if ( sra_ch.failure ) {
             backup_fastq_ch    =   FASTQ_DL (sra_ch.failure, samples_ch)
         }
-        fastq_ch    =   FASTERQ_DUMP    ( sra_ch.sra )
-        fastq_ch.concat(backup_fastq_ch.fastq)
-        fastq_ch.view()
+        fastq_ch    =   FASTERQ_DUMP    ( sra_ch.sra ).flatten()
 
     emit:
         fastq_ch

@@ -3,7 +3,7 @@
 process COLLAPSE_FASTQ {
 	publishDir "${params.study_dir}/collapsed_fastq/${BioProject}", mode: 'copy'
 
-    errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
+    // errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
 
     input:
         path fastq

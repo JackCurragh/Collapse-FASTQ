@@ -1,7 +1,7 @@
 process FASTERQ_DUMP {
     tag 'high'
 
-    errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
+    // errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
 
     input:
         file run

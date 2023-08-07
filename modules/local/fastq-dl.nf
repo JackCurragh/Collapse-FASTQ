@@ -3,7 +3,8 @@
 // Results are publushed to the study directory in the fastqc directory
 
 process FASTQ_DL {    
-	
+        errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
+
 	input:
         val failure
         tuple val(study_accession), val(run)
@@ -13,6 +14,6 @@ process FASTQ_DL {
 
     script:
         """
-        fastq-dl -a $run --cpus ${task.cpus}
+        fastq-dl -a $run --cpus 20 --outdir /data2/Jack/temp --silent
         """
 }

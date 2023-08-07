@@ -1,7 +1,7 @@
 process FETCH_RUN {
     tag 'high'
 
-    errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
+    // errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
 
     input:
         tuple val(study_accession), val(run)
