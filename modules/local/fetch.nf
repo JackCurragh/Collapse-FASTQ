@@ -1,7 +1,7 @@
 process FETCH_RUN {
     tag 'high'
 
-    // errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
+    errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
 
     input:
         tuple val(study_accession), val(run)
@@ -12,8 +12,10 @@ process FETCH_RUN {
 
     script:
         """
+        
         aws --no-sign-request s3 sync s3://sra-pub-run-odp/sra/${run} .
         if [ ! -f ${run} ] ; then
+            echo "${study_accession}        ${run}" >> test.txt
             failure="FALSE"
         fi
         """

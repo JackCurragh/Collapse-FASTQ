@@ -14,6 +14,7 @@ process FASTQ_DL {
 
     script:
         """
+        echo "${study_accession}        ${run}" >> /data1/Jack/projects/Collapse-FASTQ/data/RiboSeqOrg/data/RiboSeqOrg/failed.txt
         fastq-dl -a $run --cpus 20 --outdir /data2/Jack/temp --silent
         """
 }
