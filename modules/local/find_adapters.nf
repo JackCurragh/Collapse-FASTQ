@@ -1,7 +1,7 @@
 process FIND_ADAPTERS {
 	publishDir "${params.study_dir}/adapter_reports", mode: 'copy'
     
-    // errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
+    errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
 
     input:
         file raw_fastq

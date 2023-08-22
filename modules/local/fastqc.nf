@@ -6,7 +6,7 @@ process FASTQC {
 
 	publishDir "${params.study_dir}/fastqc", mode: 'copy'
 
-    // errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
+    errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
 	
 	input:
 	    file fastq 
