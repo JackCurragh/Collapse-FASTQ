@@ -3,15 +3,18 @@
 // Results are publushed to the study directory in the fastqc directory
 
 process FASTQ_DL {    
-	
+        errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
+
 	input:
-	    val accession
+        val failure
+        tuple val(study_accession), val(run)
 
 	output:
-	    path "*.fastq.gz" // ; emit fastq
+	    path "*.fastq.gz", emit: fastq
 
     script:
         """
-        fastq-dl -a $accession --cpus ${task.cpus}
+        echo "${study_accession}        ${run}" >> /data1/Jack/projects/Collapse-FASTQ/data/RiboSeqOrg/failed.txt
+        fastq-dl -a $run --cpus 20 --outdir /data2/Jack/temp --silent
         """
 }

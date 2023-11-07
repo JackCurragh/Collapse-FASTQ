@@ -3,7 +3,18 @@ import gzip
 from Bio.SeqIO.QualityIO import FastqGeneralIterator
 
 
-def collapse(infile, outfile):
+def collapse(infile: str, outfile: str) -> None:
+    '''
+    Read in a fasta file and only store unique sequences
+    Output a fasta file with unique sequences and their counts in the header
+
+    Header format: >seq{read_number}_x{count}
+
+    Input:
+        infile: str
+        outfile: str
+
+    '''
     unique_reads = {}
 
     with open(infile, 'rb') as f:
@@ -14,14 +25,12 @@ def collapse(infile, outfile):
             f.seek(0)
             f = open(infile, 'r')
 
-        # Read the file line by line
         for title, sequence, quality in FastqGeneralIterator(f):
             if sequence in unique_reads:
                 unique_reads[sequence]['count'] += 1
             else:
                 unique_reads[sequence] = {}
                 unique_reads[sequence]['count'] = 1
-                unique_reads[sequence]['qual'] = quality
 
     if outfile.endswith('.gz'):
         f = gzip.open(outfile, 'wt')
@@ -30,10 +39,8 @@ def collapse(infile, outfile):
 
     read_number = 1
     for seq, vals in unique_reads.items():
-        f.write(f'@seq{read_number}_x{vals["count"]}\n')
+        f.write(f'>seq{read_number}_x{vals["count"]}\n')
         f.write(f"{seq}\n")
-        f.write('+\n')
-        f.write(f'{vals["qual"]}\n')
         read_number += 1
 
 

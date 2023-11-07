@@ -1,9 +1,6 @@
 process FASTP {
     publishDir "$params.study_dir/fastp", mode: 'copy', pattern: '*.json'
-    publishDir "$params.study_dir/fastp", mode: 'copy', pattern: '*.html'
 
-    errorStrategy 'ignore'
-    
     input:
     file raw_fastq 
     file adapter_report
@@ -11,7 +8,6 @@ process FASTP {
     output:
     path '*_clipped.fastq', emit: trimmed_fastq
     path '*.json', emit: fastp_json
-    path '*.html', emit: fastp_html
 
 	
 	script: 
