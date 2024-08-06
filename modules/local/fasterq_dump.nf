@@ -11,6 +11,6 @@ process FASTERQ_DUMP {
 
     script:
         """
-        fasterq-dump -f -p -e 8 --split-files --skip-technical ${run} --temp /data2/Jack/temp
+        fasterq-dump -f -p -e 4 --split-files --skip-technical ${run} --temp /data2/Jack/temp
         """
 }
