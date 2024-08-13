@@ -14,7 +14,7 @@ workflow collapse {
 
     main:
         FASTQ_DL(sample_accession)
-        FASTQC(FASTQ_DL.out)
+        FASTQC(FASTQ_DL.out, "$projectDir/scripts/adapter_list.tsv")
         FASTP(FASTQ_DL.out)
         MULTIQC(FASTQC.out.fastqc_results.collect().ifEmpty([]), FASTP.out.fastp_json.collect().ifEmpty([]))
         COLLAPSE_FASTQ(FASTP.out.fastp_fastq)

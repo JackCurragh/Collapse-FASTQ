@@ -16,8 +16,8 @@ workflow fetch_data {
             backup_fastq_ch    =   FASTQ_DL (sra_ch.failure, samples_ch)
         }
         fastq_ch    =   FASTERQ_DUMP    ( sra_ch.sra ).flatten()
-
+        fq_ch = fastq_ch.mix(backup_fastq_ch)
     emit:
-        fastq_ch
+        fq_ch
         samples_ch
 }

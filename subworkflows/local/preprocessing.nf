@@ -13,7 +13,7 @@ workflow preprocessing {
     
 
     main:
-        fastqc_ch           =   FASTQC          ( fastq_ch )
+        fastqc_ch           =   FASTQC          ( fastq_ch, "${projectDir}/scripts/adapter_list.tsv" )
         adapter_ch          =   FIND_ADAPTERS   ( fastq_ch, fastqc_ch.fastqc_data )
 
         trimmed_fastq_ch    =   FASTP           ( fastq_ch, adapter_ch )

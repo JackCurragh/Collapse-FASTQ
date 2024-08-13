@@ -10,6 +10,7 @@ process FASTQC {
 	
 	input:
 	    file fastq 
+        path adapter_list
 
 	output:
 	    path "*_fastqc.html", emit: fastqc_html
@@ -17,6 +18,7 @@ process FASTQC {
 
     script:
         """
-        fastqc --extract -q $fastq --adapters $projectDir/scripts/adapter_list.tsv --dir /data2/Jack/temp
+        fastqc --extract -q $fastq --adapters ${adapter_list} 
+        # --dir /data2/Jack/temp
         """
 }
